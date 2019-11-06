@@ -1,5 +1,6 @@
 package com.s185020.Galgeleg_2.fragments;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,6 +8,7 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,7 +43,8 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
     private Drawable drawable;
     private int choice;
 
-    private PlayFragment() { }
+    private PlayFragment() {
+    }
 
     public static PlayFragment getInstance() {
         if (instance == null) {
@@ -93,7 +96,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
             if (choice == 2) {
                 //todo implementer
                 try {
-                    spil.hentOrdFraRegneark(""+SettingsFragment.getDifficultyLevel());
+                    spil.hentOrdFraRegneark("" + SettingsFragment.getDifficultyLevel());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -150,13 +153,17 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
     }
 
     private void gameOver(boolean won, String word, int wrongGuessCount) {
+        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
         Bundle bundle = new Bundle();
         bundle.putInt("choice", choice);
         bundle.putBoolean("won", won);
         bundle.putString("word", word);
         bundle.putInt("wrong_guess_count", wrongGuessCount);
 
-        HighScoreFragment highScoreFragment = HighScoreFragment.getInstance();;
+        HighScoreFragment highScoreFragment = HighScoreFragment.getInstance();
+        ;
         highScoreFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, highScoreFragment)
                 .addToBackStack(null)

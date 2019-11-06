@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +32,10 @@ import java.util.List;
 
 public class HighScoreFragment extends Fragment implements View.OnClickListener {
 
-    private Button button_play, button_settings, button_save, button_load;
+    private static final String FILE_NAME = "example.txt";
+    private static HighScoreFragment instance = null;
+    SharedPreferences sharedPreferences;
+    private Button button_play, button_settings;
     private TextView textView;
     private ListView listView;
     private String word;
@@ -39,17 +43,11 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     private double score;
     private int wrongGuessCount;
     private boolean won;
-    private static final String FILE_NAME = "example.txt";
     private View highScore_view;
-    private static HighScoreFragment instance = null;
     private List<String> highscoreList;
     private String SHARED_PREFS = "sharedPrefs";
-
     private String SAVED_LIST = "savedList";
-
     private String currentScoreString;
-
-    SharedPreferences sharedPreferences;
 
     private HighScoreFragment() {
     }
@@ -64,7 +62,7 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        highScore_view = inflater.inflate(R.layout.fragment_highscore, container, false);
+        highScore_view = inflater.inflate(R.layout.fragment_highscore3, container, false);
         ((MainActivity) getActivity()).setActionBarTitle("HIGHSCORE");
 
         if (getArguments() != null) {
@@ -97,7 +95,8 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         }
 
         //todo færdiggør
-        score = Math.ceil((1000.0 / 7.0) * (7.0 - wrongGuessCount));
+        //score = Math.ceil((1000.0 / 7.0) * (7.0 - wrongGuessCount));
+        int score = (int) Math.ceil((1000 / 7) * (7 - wrongGuessCount));
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 
@@ -165,9 +164,6 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
             getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, SettingsFragment.getInstance())
                     .addToBackStack(null)
                     .commit();
-        } else if (v == button_load) {
-
-
         }
     }
 
