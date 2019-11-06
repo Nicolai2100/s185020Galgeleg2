@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">s185020_NicolaiLarsen_Galgeleg 2</string>
+    <string name="hent_fra_DR">Hent fra\nDR</string>
+    <string name="hent_fra_db">Hent fra\ndatabase</string>
+    <string name="spil">Start spil!</string>
+    <string name="settings_string">Vælg hvor du vil hente ord fra \neller start spillet med det samme!</string>
+    <string name="galgespillet">GALGESPILLET</string>
+    <string name="guess">Gæt</string>
+    <string name="type_guess">Indtast gæt:</string>
+    <string name="wrong_guess_count">Forkerte gæt: </string>
+    <string name="word_to_guess">Ordet var: </string>
+
+</resources>
