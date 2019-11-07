@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,13 +25,11 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 public class HighScoreFragment extends Fragment implements View.OnClickListener {
 
-    private static final String FILE_NAME = "example.txt";
     private static HighScoreFragment instance = null;
     SharedPreferences sharedPreferences;
     private Button button_play, button_settings;
@@ -40,7 +37,7 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     private ListView listView;
     private String word;
     private int choice;
-    private double score;
+    private int difficultyLevel;
     private int wrongGuessCount;
     private boolean won;
     private View highScore_view;
@@ -67,6 +64,7 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
 
         if (getArguments() != null) {
             choice = getArguments().getInt("choice");
+            difficultyLevel = getArguments().getInt("difLevel");
             wrongGuessCount = getArguments().getInt("wrong_guess_count");
             won = getArguments().getBoolean("won");
             word = getArguments().getString("word");
@@ -78,13 +76,8 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         button_settings.setText("Settings");
 
         listView = highScore_view.findViewById(R.id.list_view);
-
-//        listView.setOnItemClickListener((AdapterView.OnItemClickListener) settings_view);
         button_play.setOnClickListener(this);
         button_settings.setOnClickListener(this);
-
-
-        // listView.setAdapter(new ArrayAdapter(this, a));
 
         if (won) {
             //todo afspil cheers
@@ -94,40 +87,26 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
             Toast.makeText(getActivity(), "Trist, du tabte!", Toast.LENGTH_LONG).show();
         }
 
-        //todo færdiggør
-        //score = Math.ceil((1000.0 / 7.0) * (7.0 - wrongGuessCount));
-        int score = (int) Math.ceil((1000 / 7) * (7 - wrongGuessCount));
+        int score = (int) Math.ceil((1000.0 / 7.0) * (7 - wrongGuessCount));
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-
         currentScoreString = ("" + (10000 + score)).substring(1) + " points - " + formatter.format(date);
 
         textView.setText(getResources().getString(R.string.word_to_guess) + word +
                 "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score);
-        button_play.setText("Prøv igen?");
+        button_play.setText("Spil igen!");
 
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         loadData();
         addCurrentDataToList();
         saveData();
-        snap();
         listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, highscoreList));
         return highScore_view;
     }
 
     private void addCurrentDataToList() {
         highscoreList.add(currentScoreString);
-
-        Comparator<String> cmp = new Comparator<String>() {
-            public int compare(String o1, String o2) {
-                int diff = (o1.substring(0, 4)).compareTo(o2.substring(0, 4));
-                //return (diff == 0) ? (Integer.valueOf(o2.substring(4)).compareTo(Integer.valueOf(o1.substring(4)))): diff;
-                return diff;
-            }
-        };
         Collections.sort(highscoreList, Collections.reverseOrder());
-
-        //Collections.sort(highscoreList, cmp);
     }
 
     private void saveData() {
@@ -150,13 +129,6 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    void snap() {
-        if (highscoreList != null)
-            for (String string : highscoreList) {
-                System.out.println(string);
-            }
-    }
-
     public void onClick(View v) {
         if (v == button_play) {
             playAgain();
@@ -172,13 +144,8 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     private void playAgain() {
         Bundle bundle = new Bundle();
         bundle.putInt("choice", choice);
+        bundle.putInt("difLevel", difficultyLevel);
         PlayFragment playFragment = PlayFragment.getInstance();
-
-        if (choice == 2) {
-            //todo implement
-            bundle.putString("choice", getArguments().getString("diflevel"));
-        }
-
         playFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, playFragment)
                 .addToBackStack(null)

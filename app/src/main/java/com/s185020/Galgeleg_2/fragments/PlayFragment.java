@@ -42,6 +42,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
     private HashMap<Integer, Integer> hashMapPictureMistake;
     private Drawable drawable;
     private int choice;
+    private int difLevel;
 
     private PlayFragment() {
     }
@@ -53,9 +54,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         return instance;
     }
 
-    public void setChoice(int choice) {
-        this.choice = choice;
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -68,8 +66,12 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         spil = new Galgelogik();
         spil.nulstil();
 
-        //todo slet
-        System.out.println(spil.getOrdet());
+        if (getArguments() != null) {
+            choice = getArguments().getInt("choice");
+            difLevel = getArguments().getInt("difLevel");
+
+        }
+        //insta elements
         button1 = play_view.findViewById(R.id.button);
         button1.setOnClickListener(this);
         editText = play_view.findViewById(R.id.editText);
@@ -77,39 +79,36 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         textViewWrongCount = play_view.findViewById(R.id.textViewWrongCount);
         textViewWrongLetters = play_view.findViewById(R.id.textViewWrongLetters);
         imageView = play_view.findViewById(R.id.imageView);
+
         drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.galge, null);
         imageView.setImageDrawable(drawable);
-//        textViewWord.setText(spil.getSynligtOrd());
+        //textViewWord.setText(spil.getSynligtOrd());
         textViewWrongCount.setText(getResources().getString(R.string.wrong_guess_count) + 0);
 
         if ((choice == 1 | choice == 2)) {
-            //todo ændre fonten på toasts
-            // Toast.makeText(getActivity(), "Henter ord!", Toast.LENGTH_LONG).show();
             if (choice == 1) {
                 try {
-                    //StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().permitAll().build());
-                    getWordFromDR();
+                    getWordFromNet();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             if (choice == 2) {
-                //todo implementer
                 try {
-                    spil.hentOrdFraRegneark("" + SettingsFragment.getDifficultyLevel());
+                    getWordFromNet();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             if (choice == 3) {
-                //Ord hentes fra GalgeLogik-klassen
-                System.out.println("Ord hentes fra GalgeLogik-klassen");
+                Toast.makeText(getActivity(), "Ord hentes fra GalgeLogik-klassen", Toast.LENGTH_SHORT).show();
             }
         }
         editText.setHint("Tast");
         textViewWord.setText(spil.getSynligtOrd());
         return play_view;
     }
+
 
     @Override
     public void onClick(View v) {
@@ -158,12 +157,12 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
 
         Bundle bundle = new Bundle();
         bundle.putInt("choice", choice);
+        bundle.putInt("difLevel", difLevel);
         bundle.putBoolean("won", won);
         bundle.putString("word", word);
         bundle.putInt("wrong_guess_count", wrongGuessCount);
 
         HighScoreFragment highScoreFragment = HighScoreFragment.getInstance();
-        ;
         highScoreFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, highScoreFragment)
                 .addToBackStack(null)
@@ -181,19 +180,31 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         hashMapPictureMistake.put(6, R.drawable.forkert6);
     }
 
-    void getWordFromDR() {
+
+    void getWordFromNet() {
         GetWordFromDRRunnable runnable = new GetWordFromDRRunnable();
         new Thread(runnable).start();
     }
 
     class GetWordFromDRRunnable implements Runnable {
+
         @Override
         public void run() {
-            try {
-                spil.hentOrdFraDr();
-                Toast.makeText(getActivity(), "Ord hentet fra DR", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (choice == 1) {
+                try {
+                    spil.hentOrdFraDr();
+                    Toast.makeText(getActivity(), "Ord hentet fra DR", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (choice == 2) {
+                try {
+                    spil.hentOrdFraRegneark("" + difLevel);
+                    Toast.makeText(getActivity(), "Ord hentet fra regneark", Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

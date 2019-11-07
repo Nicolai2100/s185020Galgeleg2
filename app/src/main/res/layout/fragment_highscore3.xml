@@ -14,8 +14,8 @@
             android:id="@+id/button_play_from_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
-            android:layout_marginTop="60dp"/>
+            android:text="@string/spil_igen"
+            android:layout_marginTop="60dp" />
 
         <Button
             android:id="@+id/button_settings"

@@ -9,5 +9,6 @@
     <string name="type_guess">Indtast gæt:</string>
     <string name="wrong_guess_count">Forkerte gæt: </string>
     <string name="word_to_guess">Ordet var: </string>
+    <string name="spil_igen">Spil igen! </string>
 
 </resources>

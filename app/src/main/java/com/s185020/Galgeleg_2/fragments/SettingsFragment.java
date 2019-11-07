@@ -1,13 +1,16 @@
 package com.s185020.Galgeleg_2.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,10 +23,9 @@ import com.s185020.Galgeleg_2.R;
 public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private static SettingsFragment instance = null;
-    private Integer choice;
     private Button button_getWordFromDR, button_getWordFromDB, button_play;
     private TextView textView;
-    private static int difficultyLevel = 1;
+    private int difficultyLevel;
     private EditText et_difLevel;
     private Handler handler = new Handler();
     private Runnable konfettiTask;
@@ -38,70 +40,61 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         return instance;
     }
 
-    public static int getDifficultyLevel() {
-        return difficultyLevel;
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View settings_view = inflater.inflate(R.layout.fragment_settings, container, false);
-
         ((MainActivity) getActivity()).setActionBarTitle("INDSTILLINGER");
-
         textView = settings_view.findViewById(R.id.settings_textView);
         button_getWordFromDR = settings_view.findViewById(R.id.button_dr);
         button_getWordFromDB = settings_view.findViewById(R.id.button_database);
         button_play = settings_view.findViewById(R.id.button_play_from_settings);
         et_difLevel = settings_view.findViewById(R.id.et_diffLvl);
-        //todo - sæt interaktivt
+        et_difLevel.setHint("Tast 1, 2 eller 3");
         button_getWordFromDR.setOnClickListener(this);
         button_getWordFromDB.setOnClickListener(this);
         button_play.setOnClickListener(this);
-
-
-        //Gets whether the selector wheel wraps when reaching the min/max value.
-        //   et_difLevel.setWrapSelectorWheel(true);
-/*
-        et_difLevel
-        et_difLevel.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                //Display the newly selected number from picker
-                System.out.println("Selected Number : " + newVal);
-                difficultyLevel = newVal;
-            }
-        });*/
-
-
         return settings_view;
     }
 
     public void onClick(View v) {
         if (v == button_getWordFromDR) {
-            startGame(1);
+            startGame(1, 0);
         }
-        //todo hent difficulty level fra settings
         if (v == button_getWordFromDB) {
-           HighScoreFragment.getInstance().deleteSaved();
-            // startGame(2);
+            String difLevel = et_difLevel.getText().toString();
+            et_difLevel.setText("");
 
+            if (!difLevel.matches("[1-3]")) {
+                Toast.makeText(getActivity(), "Kun tal mellem 1 og 3!", Toast.LENGTH_SHORT).show();
+            } else {
+                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                try {
+                    difficultyLevel = Integer.parseInt(difLevel);
+                } catch (Exception e) {
+                    difficultyLevel = 2;
+                } finally {
+                    startGame(2, difficultyLevel);
+                }
+            }
         }
         if (v == button_play) {
-            startGame(3);
+            startGame(3, 0);
         }
     }
 
-    private void startGame(Integer choice) {
+    private void startGame(Integer choice, Integer difficultyLevel) {
         PlayFragment playFragment = PlayFragment.getInstance();
-        playFragment.setChoice(choice);
+        Bundle bundle = new Bundle();
+        bundle.putInt("choice", choice);
+        bundle.putInt("difLevel", difficultyLevel);
+        playFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, playFragment)
                 .addToBackStack(null)
                 .commit();
     }
 }
-
-
 
 
 /*konfettiTask = new Runnable() {
