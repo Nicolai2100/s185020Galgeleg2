@@ -115,7 +115,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         if (v == button1) {
             Editable guessEdit = editText.getText();
             String guessString = guessEdit.toString();
-
+            editText.setText("");
             if (guessString.length() > 1) {
                 Toast.makeText(getActivity(), "Kun et bogstav!", Toast.LENGTH_SHORT).show();
 
@@ -146,7 +146,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
                         gameOver(true, spil.getOrdet(), spil.getAntalForkerteBogstaver());
                     }
                 }
-                editText.setText("");
             }
         }
     }
@@ -193,6 +192,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
             if (choice == 1) {
                 try {
                     spil.hentOrdFraDr();
+                    textViewWord.setText(spil.getSynligtOrd());
                     Toast.makeText(getActivity(), "Ord hentet fra DR", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -201,6 +201,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
             if (choice == 2) {
                 try {
                     spil.hentOrdFraRegneark("" + difLevel);
+                    textViewWord.setText(spil.getSynligtOrd());
                     Toast.makeText(getActivity(), "Ord hentet fra regneark", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();

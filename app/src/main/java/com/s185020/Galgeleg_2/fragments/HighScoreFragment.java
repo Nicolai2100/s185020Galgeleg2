@@ -45,6 +45,7 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     private String SHARED_PREFS = "sharedPrefs";
     private String SAVED_LIST = "savedList";
     private String currentScoreString;
+    private String textViewText;
 
     private HighScoreFragment() {
     }
@@ -59,7 +60,7 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        highScore_view = inflater.inflate(R.layout.fragment_highscore3, container, false);
+        highScore_view = inflater.inflate(R.layout.fragment_highscore, container, false);
         ((MainActivity) getActivity()).setActionBarTitle("HIGHSCORE");
 
         if (getArguments() != null) {
@@ -79,21 +80,25 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         button_play.setOnClickListener(this);
         button_settings.setOnClickListener(this);
 
+        int score = (int) Math.ceil((1000.0 / 7.0) * (7 - wrongGuessCount));
+
         if (won) {
             //todo afspil cheers
             Toast.makeText(getActivity(), "Flot, du vandt!", Toast.LENGTH_LONG).show();
+            textViewText = "Flot klaret! Du har vandt! Ordet var " + word +
+                    "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score;
         } else {
             //todo afspil boo
             Toast.makeText(getActivity(), "Trist, du tabte!", Toast.LENGTH_LONG).show();
+            textViewText = "Trist, du tabte! Ordet var " + word +
+                    "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score;
         }
 
-        int score = (int) Math.ceil((1000.0 / 7.0) * (7 - wrongGuessCount));
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         currentScoreString = ("" + (10000 + score)).substring(1) + " points - " + formatter.format(date);
 
-        textView.setText(getResources().getString(R.string.word_to_guess) + word +
-                "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score);
+        textView.setText(textViewText);
         button_play.setText("Spil igen!");
 
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
@@ -139,8 +144,6 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    //todo kan det gøres smartere?
-    //ny knap -> finis går tilbage til forrige aktivitet
     private void playAgain() {
         Bundle bundle = new Bundle();
         bundle.putInt("choice", choice);
