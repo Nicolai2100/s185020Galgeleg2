@@ -68,8 +68,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             if (!difLevel.matches("[1-3]")) {
                 Toast.makeText(getActivity(), "Kun tal mellem 1 og 3!", Toast.LENGTH_SHORT).show();
             } else {
-                InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                closeKeyboard();
                 try {
                     difficultyLevel = Integer.parseInt(difLevel);
                 } catch (Exception e) {
@@ -93,6 +92,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, playFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void closeKeyboard() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }
 

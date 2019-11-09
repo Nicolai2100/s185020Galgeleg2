@@ -90,7 +90,7 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         } else {
             //todo afspil boo
             Toast.makeText(getActivity(), "Trist, du tabte!", Toast.LENGTH_LONG).show();
-            textViewText = "Trist, du tabte! Ordet var " + word +
+            textViewText = "Trist, du tabte! Ordet var: \"" + word + "\"" +
                     "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score;
         }
 

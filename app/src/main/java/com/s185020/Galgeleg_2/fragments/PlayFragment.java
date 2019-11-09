@@ -37,12 +37,12 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
     private EditText editText;
     private TextView textViewWord;
     private TextView textViewWrongCount;
-    private TextView textViewWrongLetters;
     private ImageView imageView;
     private HashMap<Integer, Integer> hashMapPictureMistake;
     private Drawable drawable;
     private int choice;
     private int difLevel;
+    private String wrongLettersGuessed = "";
 
     private PlayFragment() {
     }
@@ -53,7 +53,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         }
         return instance;
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -69,41 +68,38 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         if (getArguments() != null) {
             choice = getArguments().getInt("choice");
             difLevel = getArguments().getInt("difLevel");
-
         }
+
         //insta elements
         button1 = play_view.findViewById(R.id.button);
         button1.setOnClickListener(this);
         editText = play_view.findViewById(R.id.editText);
         textViewWord = play_view.findViewById(R.id.textViewWord);
         textViewWrongCount = play_view.findViewById(R.id.textViewWrongCount);
-        textViewWrongLetters = play_view.findViewById(R.id.textViewWrongLetters);
         imageView = play_view.findViewById(R.id.imageView);
 
         drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.galge, null);
         imageView.setImageDrawable(drawable);
-        //textViewWord.setText(spil.getSynligtOrd());
-        textViewWrongCount.setText(getResources().getString(R.string.wrong_guess_count) + 0);
+        //textViewWrongCount.setText(getResources().getString(R.string.wrong_guess_count) + 0);
 
-        if ((choice == 1 | choice == 2)) {
-            if (choice == 1) {
-                try {
-                    getWordFromNet();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        if (choice == 1) {
+            try {
+                getWordFromNet();
+                Toast.makeText(getActivity(), "Ord hentet fra DR", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            if (choice == 2) {
-                try {
-                    getWordFromNet();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        } else if (choice == 2) {
+            try {
+                getWordFromNet();
+                Toast.makeText(getActivity(), "Ord hentet fra regneark", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            if (choice == 3) {
-                Toast.makeText(getActivity(), "Ord hentes fra GalgeLogik-klassen", Toast.LENGTH_SHORT).show();
-            }
+        } else {
+            Toast.makeText(getActivity(), "Ord hentes fra GalgeLogik-klassen", Toast.LENGTH_SHORT).show();
         }
+
         editText.setHint("Tast");
         textViewWord.setText(spil.getSynligtOrd());
         return play_view;
@@ -128,13 +124,18 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
             } else {
                 spil.gætBogstav(guessString.toLowerCase());
                 textViewWord.setText(spil.getSynligtOrd());
-                textViewWrongCount.setText(getResources().getString(R.string.wrong_guess_count) + spil.getAntalForkerteBogstaver());
 
                 if (!spil.erSidsteBogstavKorrekt() && spil.getAntalForkerteBogstaver() <= 6) {
+                    if (!wrongLettersGuessed.contains(guessString)) {
+                        wrongLettersGuessed = wrongLettersGuessed+guessString;
+                    }
+                    textViewWrongCount.setText(getResources().getString(R.string.wrong_guess_count) + " " + spil.getAntalForkerteBogstaver() +
+                            ". \nForkerte bogstaver: " + wrongLettersGuessed);
+
                     int rCode = hashMapPictureMistake.get(spil.getAntalForkerteBogstaver());
                     drawable = ResourcesCompat.getDrawable(getResources(), rCode, null);
                     imageView.setImageDrawable(drawable);
-                    textViewWrongLetters.append(guessString);
+
                     Toast.makeText(getActivity(), "Forkert bogstav", Toast.LENGTH_SHORT).show();
 
                 } else if (spil.erSpilletSlut()) {
@@ -193,7 +194,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
                 try {
                     spil.hentOrdFraDr();
                     textViewWord.setText(spil.getSynligtOrd());
-                    Toast.makeText(getActivity(), "Ord hentet fra DR", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -202,7 +202,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
                 try {
                     spil.hentOrdFraRegneark("" + difLevel);
                     textViewWord.setText(spil.getSynligtOrd());
-                    Toast.makeText(getActivity(), "Ord hentet fra regneark", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
