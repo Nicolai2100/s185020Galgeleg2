@@ -51,13 +51,18 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         button_play = settings_view.findViewById(R.id.button_play_from_settings);
         et_difLevel = settings_view.findViewById(R.id.et_diffLvl);
         et_difLevel.setHint("Tast 1, 2 eller 3");
+
         button_getWordFromDR.setOnClickListener(this);
         button_getWordFromDB.setOnClickListener(this);
         button_play.setOnClickListener(this);
+        et_difLevel.setOnClickListener(this);
         return settings_view;
     }
 
     public void onClick(View v) {
+        if (v == et_difLevel){
+            button_play.setVisibility(View.GONE);
+        }
         if (v == button_getWordFromDR) {
             startGame(1, 0);
         }

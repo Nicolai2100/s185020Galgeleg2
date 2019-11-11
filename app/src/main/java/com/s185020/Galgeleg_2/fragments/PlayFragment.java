@@ -86,6 +86,18 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
             try {
                 getWordFromNet();
                 Toast.makeText(getActivity(), "Ord hentet fra DR", Toast.LENGTH_SHORT).show();
+
+                Runnable run = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            spil.hentOrdFraDr();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -104,7 +116,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         textViewWord.setText(spil.getSynligtOrd());
         return play_view;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -139,7 +150,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(), "Forkert bogstav", Toast.LENGTH_SHORT).show();
 
                 } else if (spil.erSpilletSlut()) {
-
+                    wrongLettersGuessed = "";
                     if (spil.erSpilletTabt()) {
                         gameOver(false, spil.getOrdet(), spil.getAntalForkerteBogstaver());
                     }
@@ -180,8 +191,8 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         hashMapPictureMistake.put(6, R.drawable.forkert6);
     }
 
-
     void getWordFromNet() {
+
         GetWordFromDRRunnable runnable = new GetWordFromDRRunnable();
         new Thread(runnable).start();
     }
@@ -193,7 +204,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
             if (choice == 1) {
                 try {
                     spil.hentOrdFraDr();
-                    textViewWord.setText(spil.getSynligtOrd());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -201,7 +211,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
             if (choice == 2) {
                 try {
                     spil.hentOrdFraRegneark("" + difLevel);
-                    textViewWord.setText(spil.getSynligtOrd());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

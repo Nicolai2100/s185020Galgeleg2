@@ -65,6 +65,7 @@ public class WelcomeFragment extends Fragment implements Runnable {
                 .commit();
 */
 
+        //todo splash screen
 
     }
 }
