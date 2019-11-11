@@ -1,6 +1,7 @@
 package com.s185020.Galgeleg_2.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -29,7 +30,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText et_difLevel;
     private Handler handler = new Handler();
     private Runnable konfettiTask;
-
+    private View settings_view;
     private SettingsFragment() {
     }
 
@@ -43,7 +44,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View settings_view = inflater.inflate(R.layout.fragment_settings, container, false);
+        settings_view = inflater.inflate(R.layout.fragment_settings, container, false);
         ((MainActivity) getActivity()).setActionBarTitle("INDSTILLINGER");
         textView = settings_view.findViewById(R.id.settings_textView);
         button_getWordFromDR = settings_view.findViewById(R.id.button_dr);
@@ -56,12 +57,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         button_getWordFromDB.setOnClickListener(this);
         button_play.setOnClickListener(this);
         et_difLevel.setOnClickListener(this);
+
+
+//        savedInstanceState.putInt();
         return settings_view;
     }
 
     public void onClick(View v) {
-        if (v == et_difLevel){
-            button_play.setVisibility(View.GONE);
+        if (v == et_difLevel) {
+//            button_play.setVisibility(View.GONE);
+            button_play.setVisibility(View.INVISIBLE);
         }
         if (v == button_getWordFromDR) {
             startGame(1, 0);
@@ -85,6 +90,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
         if (v == button_play) {
             startGame(3, 0);
+
+
         }
     }
 
@@ -108,59 +115,56 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 }
 
+/*
+    void runKonfetti(){
 
-/*konfettiTask = new Runnable() {
+        Runnable run = new Runnable() {
+            @Override
             public void run() {
                 KonfettiView konfetti = settings_view.findViewById(R.id.viewKonfetti);
 
+            }
+        }
 
-                /*Size size = new Size() {
-                    @Override
-                    public Class<? extends Annotation> annotationType() {
-                        return null;
-                    }
 
-                    @Override
-                    public long value() {
-                        return 1;
-                    }
+        konfetti.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                //  .addSizes(new Size(12, 5f))
+                .setPosition(-50f, konfetti.getWidth() + 50f, -50f, -50f)
+                .streamFor(300, 5000L);
 
-                    @Override
-                    public long min() {
-                        return 1;
-                    }
+        ParticleSystem ps = new ParticleSystem(konfetti);
+        konfetti.start(ps);
 
-                    @Override
-                    public long max() {
-                        return 1;
-                    }
+    }
+}
 
-                    @Override
-                    public long multiple() {
-                        return 1;
-                    }
-                };*/
 
-//   .addSizes(new Size(12, 5))
+class KonfettiTask implements Runnable {
 
-/*
-                konfetti.build()
-                        .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
-                        .setDirection(0.0, 359.0)
-                        .setSpeed(1f, 5f)
-                        .setFadeOutEnabled(true)
-                        .setTimeToLive(2000L)
-                        .addShapes(Shape.RECT, Shape.CIRCLE)
-                        .addSizes(new Size(12, 5f))
-                        .setPosition(-50f, konfetti.getWidth() + 50f, -50f, -50f)
-                        .streamFor(300, 5000L);
 
-                        ParticleSystem ps = new ParticleSystem(konfetti);
-                        konfetti.start(ps);
+    public void run() {
+        KonfettiView konfetti = settings_view.findViewById(R.id.viewKonfetti);
 
-                        }
-                        };
-                        handler.postDelayed(konfettiTask, 2000);
-                        */
 
-// udfør om 10 sekunder*/
+        konfetti.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                //  .addSizes(new Size(12, 5f))
+                .setPosition(-50f, konfetti.getWidth() + 50f, -50f, -50f)
+                .streamFor(300, 5000L);
+
+        ParticleSystem ps = new ParticleSystem(konfetti);
+        konfetti.start(ps);
+
+    }
+}*/
