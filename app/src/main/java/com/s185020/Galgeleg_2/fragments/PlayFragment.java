@@ -25,6 +25,7 @@ import com.s185020.Galgeleg_2.R;
 import com.s185020.Galgeleg_2.logic.Galgelogik;
 
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class PlayFragment extends Fragment implements View.OnClickListener {
@@ -65,6 +66,8 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         spil = new Galgelogik();
         spil.nulstil();
 
+        // win();
+        lose();
         if (getArguments() != null) {
             choice = getArguments().getInt("choice");
             difLevel = getArguments().getInt("difLevel");
@@ -114,7 +117,26 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
 
         editText.setHint("Tast");
         textViewWord.setText(spil.getSynligtOrd());
+
         return play_view;
+    }
+
+    private void lose() {
+        String ordet = spil.getOrdet();
+
+        while (spil.erSpilletSlut() != true) {
+            Random r = new Random();
+            char c = (char) (r.nextInt(26) + 'a');
+            if (!ordet.contains(Character.toString(c)))
+                spil.gætBogstav(Character.toString(c));
+        }
+    }
+
+    private void win() {
+        String ordet = spil.getOrdet();
+        for (int i = 0; i < ordet.length(); i++) {
+            spil.gætBogstav(Character.toString(ordet.charAt(i)));
+        }
     }
 
     @Override
@@ -138,7 +160,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
 
                 if (!spil.erSidsteBogstavKorrekt() && spil.getAntalForkerteBogstaver() <= 6) {
                     if (!wrongLettersGuessed.contains(guessString)) {
-                        wrongLettersGuessed = wrongLettersGuessed+guessString;
+                        wrongLettersGuessed = wrongLettersGuessed + guessString;
                     }
                     textViewWrongCount.setText(getResources().getString(R.string.wrong_guess_count) + " " + spil.getAntalForkerteBogstaver() +
                             ". \nForkerte bogstaver: " + wrongLettersGuessed);
@@ -191,7 +213,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         hashMapPictureMistake.put(6, R.drawable.forkert6);
     }
 
-    void getWordFromNet() {
+    private void getWordFromNet() {
 
         GetWordFromDRRunnable runnable = new GetWordFromDRRunnable();
         new Thread(runnable).start();

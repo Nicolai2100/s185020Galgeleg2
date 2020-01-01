@@ -2,6 +2,7 @@ package com.s185020.Galgeleg_2.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     private String SAVED_LIST = "savedList";
     private String currentScoreString;
     private String textViewText;
+    private MediaPlayer soundMP;
 
     private HighScoreFragment() {
     }
@@ -80,19 +82,29 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         button_play.setOnClickListener(this);
         button_settings.setOnClickListener(this);
 
+        //Beregn point
         int score = (int) Math.ceil((1000.0 / 7.0) * (7 - wrongGuessCount));
+
+        playSoundAsync();
 
         if (won) {
             //todo afspil cheers
+//            soundMP = MediaPlayer.create(getActivity(), R.raw.tada1);
+            // soundMP.start();
+
             Toast.makeText(getActivity(), "Flot, du vandt!", Toast.LENGTH_LONG).show();
-            textViewText = "Flot klaret! Du har vandt! Ordet var " + word +
+            textViewText = "Flot klaret! Du har vundet! Ordet var " + word + "." +
                     "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score;
         } else {
             //todo afspil boo
+//            soundMP = MediaPlayer.create(getActivity(), R.raw.loser);
+            //soundMP.start();
+
             Toast.makeText(getActivity(), "Trist, du tabte!", Toast.LENGTH_LONG).show();
             textViewText = "Trist, du tabte! Ordet var: \"" + word + "\"" +
                     "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score;
         }
+
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -162,5 +174,35 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         String json = gson.toJson(highscoreList);
         editor.putString(SAVED_LIST, json);
         editor.apply();
+    }
+
+
+    private void playSoundAsync() {
+        MediaPlayerAsync runnable = new MediaPlayerAsync();
+        new Thread(runnable).start();
+    }
+
+    class MediaPlayerAsync implements Runnable {
+
+        @Override
+        public void run() {
+            if (won == true) {
+                try {
+                    soundMP = MediaPlayer.create(getActivity(), R.raw.tada1);
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+                try {
+                    soundMP = MediaPlayer.create(getActivity(), R.raw.loser);
+                    Thread.sleep(500);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            soundMP.start();
+        }
     }
 }
