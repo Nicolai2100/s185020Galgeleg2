@@ -169,12 +169,14 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     }
 
     public void deleteSaved() {
-        highscoreList = null;
+        highscoreList = new ArrayList<>() ;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(highscoreList);
         editor.putString(SAVED_LIST, json);
         editor.apply();
+
+        Toast.makeText(getActivity(), "Highscore slettet!", Toast.LENGTH_LONG).show();
     }
 
 
