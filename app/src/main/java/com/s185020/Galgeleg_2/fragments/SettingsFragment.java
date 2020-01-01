@@ -28,9 +28,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private TextView textView;
     private int difficultyLevel;
     private EditText et_difLevel;
-    private Handler handler = new Handler();
-    private Runnable konfettiTask;
     private View settings_view;
+
     private SettingsFragment() {
     }
 
@@ -58,8 +57,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         button_play.setOnClickListener(this);
         et_difLevel.setOnClickListener(this);
 
-
-//        savedInstanceState.putInt();
         return settings_view;
     }
 
@@ -90,8 +87,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
         if (v == button_play) {
             startGame(3, 0);
-
-
         }
     }
 
@@ -114,57 +109,3 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
     }
 }
-
-/*
-    void runKonfetti(){
-
-        Runnable run = new Runnable() {
-            @Override
-            public void run() {
-                KonfettiView konfetti = settings_view.findViewById(R.id.viewKonfetti);
-
-            }
-        }
-
-
-        konfetti.build()
-                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
-                .setDirection(0.0, 359.0)
-                .setSpeed(1f, 5f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(2000L)
-                .addShapes(Shape.RECT, Shape.CIRCLE)
-                //  .addSizes(new Size(12, 5f))
-                .setPosition(-50f, konfetti.getWidth() + 50f, -50f, -50f)
-                .streamFor(300, 5000L);
-
-        ParticleSystem ps = new ParticleSystem(konfetti);
-        konfetti.start(ps);
-
-    }
-}
-
-
-class KonfettiTask implements Runnable {
-
-
-    public void run() {
-        KonfettiView konfetti = settings_view.findViewById(R.id.viewKonfetti);
-
-
-        konfetti.build()
-                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
-                .setDirection(0.0, 359.0)
-                .setSpeed(1f, 5f)
-                .setFadeOutEnabled(true)
-                .setTimeToLive(2000L)
-                .addShapes(Shape.RECT, Shape.CIRCLE)
-                //  .addSizes(new Size(12, 5f))
-                .setPosition(-50f, konfetti.getWidth() + 50f, -50f, -50f)
-                .streamFor(300, 5000L);
-
-        ParticleSystem ps = new ParticleSystem(konfetti);
-        konfetti.start(ps);
-
-    }
-}*/

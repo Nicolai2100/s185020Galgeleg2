@@ -2,6 +2,7 @@ package com.s185020.Galgeleg_2.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.github.jinatonic.confetti.CommonConfetti;
+import com.github.jinatonic.confetti.ConfettiManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.s185020.Galgeleg_2.MainActivity;
@@ -48,6 +51,8 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     private String currentScoreString;
     private String textViewText;
     private MediaPlayer soundMP;
+    private ViewGroup container;
+    private ConfettiManager confettiManager;
 
     private HighScoreFragment() {
     }
@@ -88,23 +93,21 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         playSoundAsync();
 
         if (won) {
-            //todo afspil cheers
-//            soundMP = MediaPlayer.create(getActivity(), R.raw.tada1);
-            // soundMP.start();
+           /* CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN})
+                    .infinite();*/
+
+            confettiManager = CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN})
+                    .infinite();
 
             Toast.makeText(getActivity(), "Flot, du vandt!", Toast.LENGTH_LONG).show();
             textViewText = "Flot klaret! Du har vundet! Ordet var " + word + "." +
                     "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score;
         } else {
-            //todo afspil boo
-//            soundMP = MediaPlayer.create(getActivity(), R.raw.loser);
-            //soundMP.start();
 
             Toast.makeText(getActivity(), "Trist, du tabte!", Toast.LENGTH_LONG).show();
             textViewText = "Trist, du tabte! Ordet var: \"" + word + "\"" +
                     "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score;
         }
-
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -147,24 +150,22 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     }
 
     public void onClick(View v) {
+        confettiManager.setEmissionDuration(1);
+
         if (v == button_play) {
-            playAgain();
+            Bundle bundle = new Bundle();
+            bundle.putInt("choice", choice);
+            bundle.putInt("difLevel", difficultyLevel);
+            PlayFragment playFragment = PlayFragment.getInstance();
+            playFragment.setArguments(bundle);
+            getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, playFragment)
+                    .addToBackStack(null)
+                    .commit();
         } else if (v == button_settings) {
             getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, SettingsFragment.getInstance())
                     .addToBackStack(null)
                     .commit();
         }
-    }
-
-    private void playAgain() {
-        Bundle bundle = new Bundle();
-        bundle.putInt("choice", choice);
-        bundle.putInt("difLevel", difficultyLevel);
-        PlayFragment playFragment = PlayFragment.getInstance();
-        playFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, playFragment)
-                .addToBackStack(null)
-                .commit();
     }
 
     public void deleteSaved() {
@@ -189,12 +190,14 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
             if (won == true) {
                 try {
                     soundMP = MediaPlayer.create(getActivity(), R.raw.tada1);
+/*                    CommonConfetti.rainingConfetti(container, new int[]{Color.BLACK})
+                            .infinite();*/
+
                     Thread.sleep(500);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-            else {
+            } else {
                 try {
                     soundMP = MediaPlayer.create(getActivity(), R.raw.loser);
                     Thread.sleep(500);

@@ -66,8 +66,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         spil = new Galgelogik();
         spil.nulstil();
 
-        // win();
-        lose();
         if (getArguments() != null) {
             choice = getArguments().getInt("choice");
             difLevel = getArguments().getInt("difLevel");
@@ -83,7 +81,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
 
         drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.galge, null);
         imageView.setImageDrawable(drawable);
-        //textViewWrongCount.setText(getResources().getString(R.string.wrong_guess_count) + 0);
 
         if (choice == 1) {
             try {
@@ -113,12 +110,29 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
             }
         } else {
             Toast.makeText(getActivity(), "Ord hentes fra GalgeLogik-klassen", Toast.LENGTH_SHORT).show();
+            winOrLose();
         }
 
         editText.setHint("Tast");
         textViewWord.setText(spil.getSynligtOrd());
 
         return play_view;
+    }
+
+    //todo slet
+    private void winOrLose() {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    sleep(1000);
+                    win();
+                    //lose();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        t.start();
     }
 
     private void lose() {
