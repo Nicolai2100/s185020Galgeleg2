@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.s185020.Galgeleg_2"
+        applicationId "com.s185020.Galgeleg_3"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1

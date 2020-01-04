@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">s185020_NicolaiLarsen_Galgeleg 2</string>
+    <string name="app_name">s185020_NicolaiLarsen_Galgeleg 3</string>
     <string name="hent_fra_DR">Hent fra\nDR</string>
     <string name="hent_fra_db">Hent fra\ndatabase</string>
     <string name="spil">Start spil!</string>
@@ -10,5 +10,7 @@
     <string name="wrong_guess_count">Forkerte gæt: </string>
     <string name="word_to_guess">Ordet var: </string>
     <string name="spil_igen">Spil igen! </string>
+    <string name="help_text">Velkommen til Galgeleg! \n Spillet handler om at finde frem til det rigtige ord,\n ved at gætte på bogstaver. \n
+    Gætter du forkert mere end syv gange, bliver manden i galgen hængt og du taber. \n Du kan vælge mellem at hente ord fra dr.dk, fra en database eller vælge et ord fra en liste.</string>
 
 </resources>
