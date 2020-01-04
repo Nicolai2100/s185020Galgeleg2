@@ -3,7 +3,6 @@ package com.s185020.Galgeleg_2.fragments;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,7 +31,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
 
     private static PlayFragment instance = null;
 
-    private Handler mainHandler = new Handler();
     private Galgelogik spil;
     private Button button1;
     private EditText editText;
@@ -71,7 +69,6 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
             difLevel = getArguments().getInt("difLevel");
         }
 
-        //insta elements
         button1 = play_view.findViewById(R.id.button);
         button1.setOnClickListener(this);
         editText = play_view.findViewById(R.id.editText);

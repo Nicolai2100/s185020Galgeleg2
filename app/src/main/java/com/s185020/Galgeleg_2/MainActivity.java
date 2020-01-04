@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(getWindow().FEATURE_ACTION_BAR);
-        //?
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -93,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         String json = gson.toJson(highscoreList);
         editor.putString(SAVED_LIST, json);
         editor.apply();
-
         Toast.makeText(getActivity(), "Highscore slettet!", Toast.LENGTH_LONG).show();
     }
 
@@ -110,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
             onBackPressed();
         }
         if (item.getItemId() == R.id.item_help) {
-            Toast.makeText(getActivity(), "ITEM HELP PRESSED", Toast.LENGTH_LONG).show();
             Fragment fragment = new HelpFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragmentLayout, fragment)
@@ -119,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.item_delete_highscore) {
-            Toast.makeText(this, "ITEM DELETE SAVED PRESSED", Toast.LENGTH_LONG).show();
             deleteSaved();
             return true;
         }

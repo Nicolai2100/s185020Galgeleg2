@@ -1,9 +1,7 @@
 package com.s185020.Galgeleg_2.fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +60,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     public void onClick(View v) {
         if (v == et_difLevel) {
-//            button_play.setVisibility(View.GONE);
             button_play.setVisibility(View.INVISIBLE);
         }
         if (v == button_getWordFromDR) {

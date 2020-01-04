@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.s185020.Galgeleg_2.R;
@@ -21,14 +20,5 @@ public class HelpFragment extends Fragment {
         View help_view = inflater.inflate(R.layout.fragment_help, container, false);
 
         return help_view;
-    }
-
-
-    private void openSettings() {
-        getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, SettingsFragment.getInstance())
-                .addToBackStack(null)
-                .commit();
-
-
     }
 }
