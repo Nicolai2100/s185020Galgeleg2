@@ -1,4 +1,4 @@
-package com.s185020.Galgeleg_2.fragments;
+package com.s185020.Galgeleg_3.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,10 +14,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.ListFragment;
 
-import com.s185020.Galgeleg_2.MainActivity;
-import com.s185020.Galgeleg_2.R;
+import com.s185020.Galgeleg_3.MainActivity;
+import com.s185020.Galgeleg_3.R;
 
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {

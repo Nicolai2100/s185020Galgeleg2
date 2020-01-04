@@ -1,7 +1,6 @@
-package com.s185020.Galgeleg_2.fragments;
+package com.s185020.Galgeleg_3.fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.s185020.Galgeleg_2.R;
+import com.s185020.Galgeleg_3.R;
 
 public class HelpFragment extends Fragment {
 

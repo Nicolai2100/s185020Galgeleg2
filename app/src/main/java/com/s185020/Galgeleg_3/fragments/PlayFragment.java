@@ -1,4 +1,4 @@
-package com.s185020.Galgeleg_2.fragments;
+package com.s185020.Galgeleg_3.fragments;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -19,9 +19,9 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import com.s185020.Galgeleg_2.MainActivity;
-import com.s185020.Galgeleg_2.R;
-import com.s185020.Galgeleg_2.logic.Galgelogik;
+import com.s185020.Galgeleg_3.MainActivity;
+import com.s185020.Galgeleg_3.R;
+import com.s185020.Galgeleg_3.logic.Galgelogik;
 
 import java.util.HashMap;
 import java.util.Random;

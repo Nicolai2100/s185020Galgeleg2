@@ -1,4 +1,4 @@
-package com.s185020.Galgeleg_2.fragments;
+package com.s185020.Galgeleg_3.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -1,4 +1,4 @@
-package com.s185020.Galgeleg_2.fragments;
+package com.s185020.Galgeleg_3.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.s185020.Galgeleg_2.R;
+import com.s185020.Galgeleg_3.R;
 
 public class WelcomeFragment extends Fragment implements Runnable {
     private Handler handler = new Handler();

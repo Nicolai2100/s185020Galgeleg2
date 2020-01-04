@@ -1,4 +1,4 @@
-package com.s185020.Galgeleg_2.fragments;
+package com.s185020.Galgeleg_3.fragments;
 
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -18,8 +18,8 @@ import androidx.fragment.app.Fragment;
 
 import com.github.jinatonic.confetti.CommonConfetti;
 import com.github.jinatonic.confetti.ConfettiManager;
-import com.s185020.Galgeleg_2.MainActivity;
-import com.s185020.Galgeleg_2.R;
+import com.s185020.Galgeleg_3.MainActivity;
+import com.s185020.Galgeleg_3.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

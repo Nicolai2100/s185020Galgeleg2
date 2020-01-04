@@ -1,4 +1,4 @@
-package com.s185020.Galgeleg_2.logic;
+package com.s185020.Galgeleg_3.logic;
 
 public class GalgeLogikPlayer {
 

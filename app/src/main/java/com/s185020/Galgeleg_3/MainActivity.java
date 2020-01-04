@@ -1,4 +1,4 @@
-package com.s185020.Galgeleg_2;
+package com.s185020.Galgeleg_3;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,10 +16,10 @@ import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.s185020.Galgeleg_2.fragments.DialogFragment;
-import com.s185020.Galgeleg_2.fragments.HelpFragment;
-import com.s185020.Galgeleg_2.fragments.HighscoreFragment;
-import com.s185020.Galgeleg_2.fragments.WelcomeFragment;
+import com.s185020.Galgeleg_3.fragments.DialogFragment;
+import com.s185020.Galgeleg_3.fragments.HelpFragment;
+import com.s185020.Galgeleg_3.fragments.HighscoreFragment;
+import com.s185020.Galgeleg_3.fragments.WelcomeFragment;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -29,10 +29,18 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements DialogFragment.DialogFragmentListener {
 
     public static List<String> highscoreList;
+    public static List<String> savedWords;
+
     public static String SHARED_PREFS = "sharedPrefs";
-    public static String SAVED_LIST = "savedList";
+    public static String SAVED_HIGHSCORE_LIST = "savedList";
+    public static String SAVED_SAVEDWORDS_LIST = "savedList";
+
     public static SharedPreferences sharedPreferences;
 
+    public static void addSavedWordToList(String newWord) {
+        savedWords.add(newWord);
+        saveSavedWordsList();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,31 +60,61 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
 
         //Shared prefs instantieret
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        loadData();
+
+        loadHighscoreList();
+        loadSavedWordsList();
+
+
+    }
+
+    private void loadSavedWordsList() {
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(SAVED_SAVEDWORDS_LIST, null);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        savedWords = gson.fromJson(json, type);
+
+        if (savedWords == null) {
+            savedWords = new ArrayList<>();
+        }
+    }
+
+    //todo lav om til ikke-static
+    public static void saveSavedWordsList() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(getSavedWordsList());
+        editor.putString(SAVED_SAVEDWORDS_LIST, json);
+        editor.apply();
     }
 
     public static List getHighscoreList() {
         return highscoreList;
     }
 
+    public static List getSavedWordsList() {
+        return savedWords;
+    }
+
+
     public static void addCurrentDataToList(String newScore) {
         highscoreList.add(newScore);
         Collections.sort(highscoreList, Collections.reverseOrder());
-        saveData();
+        saveHighscoreList();
     }
 
     //todo lav om til ikke-static
-    public static void saveData() {
+    public static void saveHighscoreList() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(highscoreList);
-        editor.putString(SAVED_LIST, json);
+        editor.putString(SAVED_HIGHSCORE_LIST, json);
         editor.apply();
     }
 
-    private void loadData() {
+    private void loadHighscoreList() {
         Gson gson = new Gson();
-        String json = sharedPreferences.getString(SAVED_LIST, null);
+        String json = sharedPreferences.getString(SAVED_HIGHSCORE_LIST, null);
         Type type = new TypeToken<ArrayList<String>>() {
         }.getType();
         highscoreList = gson.fromJson(json, type);
@@ -86,14 +124,24 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
         }
     }
 
-    public void deleteSaved() {
+    public void deleteSavedHighscore() {
         highscoreList = new ArrayList<>();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(highscoreList);
-        editor.putString(SAVED_LIST, json);
+        editor.putString(SAVED_HIGHSCORE_LIST, json);
         editor.apply();
         Toast.makeText(getActivity(), "Highscore slettet!", Toast.LENGTH_LONG).show();
+    }
+
+    public void deleteSavedWords() {
+        savedWords = new ArrayList<>();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(savedWords);
+        editor.putString(SAVED_SAVEDWORDS_LIST, json);
+        editor.apply();
+        Toast.makeText(getActivity(), "Gemte ord slettet!", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -128,7 +176,12 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
                     .addToBackStack(null)
                     .commit();
             return true;
-        } else {
+        }
+        if (item.getItemId() == R.id.item_delete_saved_words) {
+            deleteSavedWords();
+
+            return true;
+        }else {
             return super.onOptionsItemSelected(item);
         }
     }
@@ -144,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
     @Override
     public void onYesClicked() {
         //Highscore slettes
-        deleteSaved();
+        deleteSavedHighscore();
     }
 
     private void closeKeyboard() {

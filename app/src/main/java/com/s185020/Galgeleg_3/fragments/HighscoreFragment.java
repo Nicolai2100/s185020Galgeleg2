@@ -1,4 +1,4 @@
-package com.s185020.Galgeleg_2.fragments;
+package com.s185020.Galgeleg_3.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.s185020.Galgeleg_2.MainActivity;
-import com.s185020.Galgeleg_2.R;
+import com.s185020.Galgeleg_3.MainActivity;
+import com.s185020.Galgeleg_3.R;
 
 public class HighscoreFragment extends Fragment {
 
