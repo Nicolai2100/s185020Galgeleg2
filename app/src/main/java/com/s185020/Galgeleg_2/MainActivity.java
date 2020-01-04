@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.s185020.Galgeleg_2.fragments.DialogFragment;
 import com.s185020.Galgeleg_2.fragments.HelpFragment;
 import com.s185020.Galgeleg_2.fragments.HighscoreFragment;
 import com.s185020.Galgeleg_2.fragments.WelcomeFragment;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogFragment.DialogFragmentListener {
 
     public static List<String> highscoreList;
     public static String SHARED_PREFS = "sharedPrefs";
@@ -116,7 +117,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.item_delete_highscore) {
-            deleteSaved();
+
+            DialogFragment dialogFragment = new DialogFragment();
+            dialogFragment.show(getSupportFragmentManager(), " snap");
+
+           // deleteSaved();
             return true;
         }
         if (item.getItemId() == R.id.item_view_highscore) {
@@ -145,5 +150,11 @@ public class MainActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public void onYesClicked() {
+        //Highscore slettes
+        deleteSaved();
     }
 }
