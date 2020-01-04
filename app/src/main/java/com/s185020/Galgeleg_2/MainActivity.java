@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.s185020.Galgeleg_2.fragments.HelpFragment;
-import com.s185020.Galgeleg_2.fragments.HighScoreFragment;
+import com.s185020.Galgeleg_2.fragments.HighscoreFragment;
 import com.s185020.Galgeleg_2.fragments.WelcomeFragment;
 
 import java.lang.reflect.Type;
@@ -51,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Velkommen");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         //Shared prefs instantieret
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         loadData();
@@ -64,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     public static void addCurrentDataToList(String newScore) {
         highscoreList.add(newScore);
         Collections.sort(highscoreList, Collections.reverseOrder());
-
         saveData();
     }
 
@@ -126,16 +123,14 @@ public class MainActivity extends AppCompatActivity {
             deleteSaved();
             return true;
         }
-       /* if (item.getItemId() == R.id.item_show_highscore) {
-
-            Toast.makeText(this, "ITEM DELETE SAVED PRESSED", Toast.LENGTH_LONG).show();
-            //todo implemenet
-            HighScoreFragment.getInstance().deleteSaved();
-
+        if (item.getItemId() == R.id.item_view_highscore) {
+            Fragment fragment = new HighscoreFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentLayout, fragment)
+                    .addToBackStack(null)
+                    .commit();
             return true;
-        }*/
-
-        else {
+        } else {
             return super.onOptionsItemSelected(item);
         }
     }
@@ -155,5 +150,4 @@ public class MainActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-
 }

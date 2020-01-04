@@ -209,9 +209,9 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         bundle.putString("word", word);
         bundle.putInt("wrong_guess_count", wrongGuessCount);
 
-        HighScoreFragment highScoreFragment = HighScoreFragment.getInstance();
-        highScoreFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, highScoreFragment)
+        GameOverFragment gameOverFragment = GameOverFragment.getInstance();
+        gameOverFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, gameOverFragment)
                 .addToBackStack(null)
                 .commit();
     }

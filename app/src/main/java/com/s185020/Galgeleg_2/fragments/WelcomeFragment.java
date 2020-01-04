@@ -58,7 +58,7 @@ public class WelcomeFragment extends Fragment implements Runnable {
         bundle.putString("word", "bauhaus");
         bundle.putInt("wrong_guess_count", 3);
 
-        HighScoreFragment highScoreFragment = new HighScoreFragment();
+        GameOverFragment highScoreFragment = new GameOverFragment();
         highScoreFragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, highScoreFragment)
                 .addToBackStack(null)

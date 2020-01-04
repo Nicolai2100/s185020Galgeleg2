@@ -24,11 +24,12 @@ import com.s185020.Galgeleg_2.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class HighScoreFragment extends Fragment implements View.OnClickListener {
+public class GameOverFragment extends Fragment implements View.OnClickListener {
 
-    private static HighScoreFragment instance = null;
+    private static GameOverFragment instance = null;
     private Button button_play, button_settings;
     private TextView textView;
+    private ListView listView;
     private String word;
     private int choice;
     private int difficultyLevel;
@@ -39,14 +40,13 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     private String textViewText;
     private MediaPlayer soundMP;
     private ConfettiManager confettiManager;
-    private ListView listView;
 
-    private HighScoreFragment() {
+    private GameOverFragment() {
     }
 
-    public static HighScoreFragment getInstance() {
+    public static GameOverFragment getInstance() {
         if (instance == null) {
-            instance = new HighScoreFragment();
+            instance = new GameOverFragment();
         }
         return instance;
     }
@@ -54,7 +54,7 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        highScore_view = inflater.inflate(R.layout.fragment_highscore, container, false);
+        highScore_view = inflater.inflate(R.layout.fragment_game_over, container, false);
         ((MainActivity) getActivity()).setActionBarTitle("HIGHSCORE");
 
         if (getArguments() != null) {
@@ -70,7 +70,7 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         button_settings = highScore_view.findViewById(R.id.button_settings);
         button_settings.setText("Settings");
 
-        listView = highScore_view.findViewById(R.id.list_view);
+        listView = highScore_view.findViewById(R.id.list_view_game_over);
         button_play.setOnClickListener(this);
         button_settings.setOnClickListener(this);
 
@@ -99,11 +99,6 @@ public class HighScoreFragment extends Fragment implements View.OnClickListener 
         button_play.setText("Spil igen!");
 
         MainActivity.addCurrentDataToList(currentScoreString);
-
-       /* sharedPreferences = getActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        loadData();
-        addCurrentDataToList();
-        saveData();*/
         listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, MainActivity.getHighscoreList()));
         return highScore_view;
     }

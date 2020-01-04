@@ -7,6 +7,11 @@
         app:showAsAction="never"
         />
 
+    <item android:id="@+id/item_view_highscore"
+        android:title="View highscore"
+        app:showAsAction="never"
+        />
+
     <item android:id="@+id/item_delete_highscore"
         android:title="Reset highscore"
         app:showAsAction="never"
