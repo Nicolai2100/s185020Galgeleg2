@@ -15,25 +15,45 @@ import androidx.appcompat.app.AppCompatDialogFragment;
  */
 
 public class DialogFragment extends AppCompatDialogFragment {
+    private boolean fromMainActivity;
     private DialogFragmentListener listener;
+    private String message = null;
+
+    public DialogFragment(String message, boolean fromMainActivity) {
+        this.message = message;
+        this.fromMainActivity = fromMainActivity;
+    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Obs!").setMessage("Ønsker du at slette den gemte highscoreliste?").setNegativeButton("Nej", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        }).setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                listener.onYesClicked();
-            }
-        });
-
-        return builder.create();
+        if (fromMainActivity) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Obs!").setMessage(message).setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }).setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    listener.onYesClicked();
+                }
+            });
+            return builder.create();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Obs!").setMessage(message).setNegativeButton("Nej", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            }).setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    listener.onYesClicked();
+                }
+            });
+            return builder.create();
+        }
     }
 
     public interface DialogFragmentListener {
@@ -44,7 +64,10 @@ public class DialogFragment extends AppCompatDialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            listener = (DialogFragmentListener) context;
+            if (fromMainActivity) {
+                listener = (DialogFragmentListener) context;
+            } else
+                listener = (DialogFragmentListener) getTargetFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement DialogFragmentListener");
         }

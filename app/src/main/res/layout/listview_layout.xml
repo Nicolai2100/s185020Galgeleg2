@@ -22,6 +22,7 @@
         android:layout_toRightOf="@+id/list_elem_drawable"
         android:text="overskrift"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:gravity="center"/>
 
 </RelativeLayout>

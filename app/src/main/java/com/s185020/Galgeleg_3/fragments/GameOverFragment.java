@@ -98,7 +98,7 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
         textView.setText(textViewText);
         button_play.setText("Spil igen!");
 
-        MainActivity.addCurrentDataToList(currentScoreString);
+        MainActivity.getInstance().addNewHighscoreToList(currentScoreString);
         listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, MainActivity.getHighscoreList()));
         return highScore_view;
     }
@@ -110,7 +110,7 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
 
             if (choice == 4) {
                 //todo delete addToBackStack
-                getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, new ChooseWordListFragment())
+                getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, new WordListFragment())
                         .addToBackStack(null)
                         .commit();
 

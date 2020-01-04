@@ -48,10 +48,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         button_getWordFromDB = settings_view.findViewById(R.id.button_database);
         button_play = settings_view.findViewById(R.id.button_play_from_settings);
         button_play_from_list = settings_view.findViewById(R.id.button_play_from_list);
-
         et_difLevel = settings_view.findViewById(R.id.et_diffLvl);
         et_difLevel.setHint("Tast 1, 2 eller 3");
-
         button_getWordFromDR.setOnClickListener(this);
         button_getWordFromDB.setOnClickListener(this);
         button_play.setOnClickListener(this);
@@ -85,7 +83,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             }
         }
         if (v == button_play_from_list) {
-            Fragment fragment = new ChooseWordListFragment();
+            Fragment fragment = new WordListFragment();
             getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, fragment)
                     .addToBackStack(null)
                     .commit();

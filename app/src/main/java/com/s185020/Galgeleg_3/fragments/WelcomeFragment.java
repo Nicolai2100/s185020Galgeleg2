@@ -29,11 +29,12 @@ public class WelcomeFragment extends Fragment implements Runnable {
                 openSettings();
             }
         });
-        //todo slet evt
+
+        /*//todo slet evt
         if (savedInstanceState == null) {
             handler.postDelayed(this, 3000);
         }
-        handler.postDelayed(this, 3000);
+        handler.postDelayed(this, 3000);*/
 
         return welcome_view;
     }
@@ -47,10 +48,11 @@ public class WelcomeFragment extends Fragment implements Runnable {
         getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, SettingsFragment.getInstance())
                 .addToBackStack(null)
                 .commit();
+       // handler.removeCallbacks();
 
 
 
-/*
+/*  todo slet
         Test purpose
         Bundle bundle = new Bundle();
         bundle.putInt("choice", 1);

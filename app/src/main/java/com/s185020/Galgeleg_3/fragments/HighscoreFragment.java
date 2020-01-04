@@ -23,7 +23,6 @@ public class HighscoreFragment extends Fragment {
 
         ListView listView = highscore_view.findViewById(R.id.list_view_highscore);
         listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, MainActivity.getHighscoreList()));
-
         return highscore_view;
     }
 }
