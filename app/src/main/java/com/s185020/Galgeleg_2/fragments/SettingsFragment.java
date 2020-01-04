@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.ListFragment;
 
 import com.s185020.Galgeleg_2.MainActivity;
 import com.s185020.Galgeleg_2.R;
@@ -22,7 +23,7 @@ import com.s185020.Galgeleg_2.R;
 public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private static SettingsFragment instance = null;
-    private Button button_getWordFromDR, button_getWordFromDB, button_play;
+    private Button button_getWordFromDR, button_getWordFromDB, button_play, button_play_from_list;
     private TextView textView;
     private int difficultyLevel;
     private EditText et_difLevel;
@@ -47,14 +48,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         button_getWordFromDR = settings_view.findViewById(R.id.button_dr);
         button_getWordFromDB = settings_view.findViewById(R.id.button_database);
         button_play = settings_view.findViewById(R.id.button_play_from_settings);
+        button_play_from_list = settings_view.findViewById(R.id.button_play_from_list);
+
         et_difLevel = settings_view.findViewById(R.id.et_diffLvl);
         et_difLevel.setHint("Tast 1, 2 eller 3");
 
         button_getWordFromDR.setOnClickListener(this);
         button_getWordFromDB.setOnClickListener(this);
         button_play.setOnClickListener(this);
+        button_play_from_list.setOnClickListener(this);
         et_difLevel.setOnClickListener(this);
-
         return settings_view;
     }
 
@@ -81,6 +84,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     startGame(2, difficultyLevel);
                 }
             }
+        }
+        if (v == button_play_from_list) {
+            Fragment fragment = new ChooseWordListFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, fragment)
+                    .addToBackStack(null)
+                    .commit();
         }
         if (v == button_play) {
             startGame(3, 0);

@@ -107,14 +107,24 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
         confettiManager.setEmissionDuration(1);
 
         if (v == button_play) {
-            Bundle bundle = new Bundle();
-            bundle.putInt("choice", choice);
-            bundle.putInt("difLevel", difficultyLevel);
-            PlayFragment playFragment = PlayFragment.getInstance();
-            playFragment.setArguments(bundle);
-            getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, playFragment)
-                    .addToBackStack(null)
-                    .commit();
+
+            if (choice == 4) {
+                //todo delete addToBackStack
+                getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, new ChooseWordListFragment())
+                        .addToBackStack(null)
+                        .commit();
+
+            } else {
+                Bundle bundle = new Bundle();
+                bundle.putInt("choice", choice);
+                bundle.putInt("difLevel", difficultyLevel);
+                PlayFragment playFragment = PlayFragment.getInstance();
+                playFragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, playFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+
         } else if (v == button_settings) {
             getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, SettingsFragment.getInstance())
                     .addToBackStack(null)

@@ -117,11 +117,8 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
             return true;
         }
         if (item.getItemId() == R.id.item_delete_highscore) {
-
             DialogFragment dialogFragment = new DialogFragment();
             dialogFragment.show(getSupportFragmentManager(), " snap");
-
-           // deleteSaved();
             return true;
         }
         if (item.getItemId() == R.id.item_view_highscore) {
@@ -144,6 +141,12 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
         return this;
     }
 
+    @Override
+    public void onYesClicked() {
+        //Highscore slettes
+        deleteSaved();
+    }
+
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -152,9 +155,4 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
         }
     }
 
-    @Override
-    public void onYesClicked() {
-        //Highscore slettes
-        deleteSaved();
-    }
 }

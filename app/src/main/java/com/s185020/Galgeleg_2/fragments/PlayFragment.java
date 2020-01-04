@@ -39,9 +39,11 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
     private ImageView imageView;
     private HashMap<Integer, Integer> hashMapPictureMistake;
     private Drawable drawable;
+    private String wrongLettersGuessed = "";
+    //Bundle
     private int choice;
     private int difLevel;
-    private String wrongLettersGuessed = "";
+    private String wordChosen;
 
     private PlayFragment() {
     }
@@ -62,11 +64,11 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
 
         instaHashMap();
         spil = new Galgelogik();
-        spil.nulstil();
 
         if (getArguments() != null) {
             choice = getArguments().getInt("choice");
             difLevel = getArguments().getInt("difLevel");
+            wordChosen = getArguments().getString("wordChosen");
         }
 
         button1 = play_view.findViewById(R.id.button);
@@ -105,14 +107,16 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+        } else if (choice == 4) {
+            spil.tilføjOrd(wordChosen);
+
         } else {
             Toast.makeText(getActivity(), "Ord hentes fra GalgeLogik-klassen", Toast.LENGTH_SHORT).show();
             winOrLose();
         }
-
         editText.setHint("Tast");
         textViewWord.setText(spil.getSynligtOrd());
-
         return play_view;
     }
 

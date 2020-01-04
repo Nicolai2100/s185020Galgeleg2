@@ -93,6 +93,10 @@ public class Galgelogik {
         }
     }
 
+    public void setOrdet(String ordet) {
+        this.ordet = ordet;
+    }
+
     public void gætBogstav(String bogstav) {
         if (bogstav.length() != 1) return;
         System.out.println("Der gættes på bogstavet: " + bogstav);
@@ -200,5 +204,10 @@ public class Galgelogik {
 
         System.out.println("muligeOrd = " + muligeOrd);
         nulstil();
+    }
+
+    public void tilføjOrd(String valgtOrd){
+        ordet = valgtOrd;
+        opdaterSynligtOrd();
     }
 }
