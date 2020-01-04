@@ -3,6 +3,7 @@ package com.s185020.Galgeleg_3.fragments;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,77 +82,23 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.galge, null);
         imageView.setImageDrawable(drawable);
 
-        if (choice == 1) {
+
+        if (choice == 1 || choice == 2) {
             try {
+                button1.setText("Venter på tråd");
                 getWordFromNet();
-                Toast.makeText(getActivity(), "Ord hentet fra DR", Toast.LENGTH_SHORT).show();
-
-                Runnable run = new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            spil.hentOrdFraDr();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-
+                Toast.makeText(getActivity(), "Ordet er klar!", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (choice == 2) {
-            try {
-                getWordFromNet();
-                Toast.makeText(getActivity(), "Ord hentet fra regneark", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
         } else if (choice == 4) {
             spil.tilføjOrd(wordChosen);
-
         } else {
             Toast.makeText(getActivity(), "Ord hentes fra GalgeLogik-klassen", Toast.LENGTH_SHORT).show();
-            winOrLose();
         }
         editText.setHint("Tast");
         textViewWord.setText(spil.getSynligtOrd());
         return play_view;
-    }
-
-    //todo slet
-    private void winOrLose() {
-        Thread t = new Thread() {
-            public void run() {
-                try {
-                    sleep(1000);
-                    win();
-                    //lose();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-        t.start();
-    }
-
-    private void lose() {
-        String ordet = spil.getOrdet();
-
-        while (spil.erSpilletSlut() != true) {
-            Random r = new Random();
-            char c = (char) (r.nextInt(26) + 'a');
-            if (!ordet.contains(Character.toString(c)))
-                spil.gætBogstav(Character.toString(c));
-        }
-    }
-
-    private void win() {
-        String ordet = spil.getOrdet();
-        for (int i = 0; i < ordet.length(); i++) {
-            spil.gætBogstav(Character.toString(ordet.charAt(i)));
-        }
     }
 
     @Override
@@ -240,6 +187,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         public void run() {
             if (choice == 1) {
                 try {
+                    button1.setEnabled(false);
                     spil.hentOrdFraDr();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -252,6 +200,48 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
                     e.printStackTrace();
                 }
             }
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    textViewWord.setText(spil.getSynligtOrd());
+                    button1.setEnabled(true);
+                    button1.setText("Gæt");
+                }
+            });
+        }
+    }
+
+    //todo slet
+    private void winOrLose() {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    sleep(1000);
+                    win();
+                    //lose();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        t.start();
+    }
+
+    private void lose() {
+        String ordet = spil.getOrdet();
+
+        while (spil.erSpilletSlut() != true) {
+            Random r = new Random();
+            char c = (char) (r.nextInt(26) + 'a');
+            if (!ordet.contains(Character.toString(c)))
+                spil.gætBogstav(Character.toString(c));
+        }
+    }
+
+    private void win() {
+        String ordet = spil.getOrdet();
+        for (int i = 0; i < ordet.length(); i++) {
+            spil.gætBogstav(Character.toString(ordet.charAt(i)));
         }
     }
 }
