@@ -10,8 +10,10 @@
     <string name="wrong_guess_count">Forkerte gæt: </string>
     <string name="word_to_guess">Ordet var: </string>
     <string name="spil_igen">Spil igen! </string>
-    <string name="help_text">Galgeleg handler om at finde frem til det rigtige ord,\n ved at gætte på bogstaver. \n
-    Gætter du forkert mere end syv gange, bliver manden i galgen hængt og du taber. \n Du kan vælge mellem at hente ord fra dr.dk, fra en database eller vælge et ord fra en liste.</string>
+    <string name="help_text">Galgeleg handler om at finde frem til det rigtige ord, ved at gætte på bogstaver.
+    \nGætter du forkert mere end syv gange, bliver manden i galgen hængt og du taber.
+         \nDu kan vælge mellem at hente ord fra dr.dk, fra en database eller vælge et ord fra en liste.</string>
     <string name="help_title">Galgeleg</string>
+    <string name="go_to_settings">Indstillinger</string>
 
 </resources>

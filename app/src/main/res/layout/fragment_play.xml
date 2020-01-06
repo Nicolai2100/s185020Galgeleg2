@@ -7,61 +7,61 @@
     android:layout_gravity="center_vertical"
     tools:context=".fragments.PlayFragment">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="95dp"
-        android:layout_height="94dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWord"
-        app:srcCompat="@drawable/galge" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="95dp"
+            android:layout_height="94dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewWord"
+            app:srcCompat="@drawable/galge" />
 
-    <LinearLayout
-        android:id="@+id/linearlayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
-
-        <EditText
-            android:id="@+id/editText"
+        <LinearLayout
+            android:id="@+id/linearlayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="75dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/guess" />
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="96dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textAlignment="center" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/button"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/guess" />
 
-    <TextView
-        android:id="@+id/textViewWord"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWrongCount" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/textViewWrongCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textViewWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewWrongCount" />
 
+        <TextView
+            android:id="@+id/textViewWrongCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

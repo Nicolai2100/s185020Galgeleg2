@@ -5,48 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".fragments.SettingsFragment">
 
-
     <LinearLayout
-        android:id="@+id/linearlayout"
+        android:id="@+id/linearlayout47"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_word_list">
 
         <EditText
             android:id="@+id/editText_choose_word"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="88dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text" />
 
         <Button
             android:id="@+id/button_choose_word"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="ok" />
 
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/linearLayout_list_view"
-        android:layout_width="199dp"
+        android:layout_width="200dp"
         android:layout_height="278dp"
-        android:layout_marginTop="264dp"
         android:orientation="vertical"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/linearlayout47">
 
         <ListView
             android:id="@+id/list_view_word_list"

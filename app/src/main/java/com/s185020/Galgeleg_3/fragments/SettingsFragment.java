@@ -43,6 +43,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                              @Nullable Bundle savedInstanceState) {
         settings_view = inflater.inflate(R.layout.fragment_settings, container, false);
         ((MainActivity) getActivity()).setActionBarTitle("INDSTILLINGER");
+        ((MainActivity) getActivity()).getSupportActionBar().show();
+
         textView = settings_view.findViewById(R.id.settings_textView);
         button_getWordFromDR = settings_view.findViewById(R.id.button_dr);
         button_getWordFromDB = settings_view.findViewById(R.id.button_database);
@@ -70,7 +72,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             et_difLevel.setText("");
 
             if (!difLevel.matches("[1-3]")) {
-                Toast.makeText(getActivity(), "Kun tal mellem 1 og 3!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Skriv et tal mellem 1 og 3!", Toast.LENGTH_SHORT).show();
             } else {
                 closeKeyboard();
                 try {

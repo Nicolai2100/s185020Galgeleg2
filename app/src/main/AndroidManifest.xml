@@ -14,10 +14,8 @@
         <activity android:name="com.s185020.Galgeleg_3.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

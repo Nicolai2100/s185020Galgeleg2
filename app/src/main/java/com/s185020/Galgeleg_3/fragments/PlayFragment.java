@@ -60,9 +60,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View play_view = inflater.inflate(R.layout.fragment_play, container, false);
-
         ((MainActivity) getActivity()).setActionBarTitle("GALGESPILLET");
-
         instaHashMap();
         spil = new Galgelogik();
 
@@ -78,10 +76,8 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         textViewWord = play_view.findViewById(R.id.textViewWord);
         textViewWrongCount = play_view.findViewById(R.id.textViewWrongCount);
         imageView = play_view.findViewById(R.id.imageView);
-
         drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.galge, null);
         imageView.setImageDrawable(drawable);
-
 
         if (choice == 1 || choice == 2) {
             try {
@@ -98,6 +94,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         }
         editText.setHint("Tast");
         textViewWord.setText(spil.getSynligtOrd());
+        winOrLose();
         return play_view;
     }
 

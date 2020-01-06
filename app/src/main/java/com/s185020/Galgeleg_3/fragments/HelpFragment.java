@@ -18,10 +18,7 @@ public class HelpFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View help_view = inflater.inflate(R.layout.fragment_help, container, false);
-        //todo alle steder
-        ((MainActivity) getActivity()).setActionBarTitle("INDSTILLINGER");
-
-
+        ((MainActivity) getActivity()).setActionBarTitle("HJÆLP");
         return help_view;
     }
 }

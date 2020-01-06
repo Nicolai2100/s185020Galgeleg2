@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.s185020.Galgeleg_3.MainActivity;
 import com.s185020.Galgeleg_3.R;
+import com.s185020.Galgeleg_3.logic.Helper;
 
 public class WordListFragment extends Fragment implements View.OnClickListener, DialogFragment.DialogFragmentListener {
     private Button saveWordButton;
@@ -28,6 +29,7 @@ public class WordListFragment extends Fragment implements View.OnClickListener, 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View choseWordView = inflater.inflate(R.layout.fragment_word_list, container, false);
+        ((MainActivity) getActivity()).setActionBarTitle("VÆLG ORD FRA LISTE");
 
         saveWordButton = choseWordView.findViewById(R.id.button_choose_word);
         saveWordButton.setOnClickListener(this);
@@ -47,11 +49,11 @@ public class WordListFragment extends Fragment implements View.OnClickListener, 
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String wordToEdit = listView.getItemAtPosition(position).toString();
                 editText.setText(wordToEdit);
-                MainActivity.getSavedWordsList().remove(position);
+                Helper.getSavedWordsList().remove(position);
                 return true;
             }
         });
-        listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, MainActivity.getSavedWordsList()));
+        listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, Helper.getSavedWordsList()));
         return choseWordView;
     }
 
@@ -64,8 +66,8 @@ public class WordListFragment extends Fragment implements View.OnClickListener, 
                 Toast.makeText(getActivity(), "Det indtastede ord er for kort!", Toast.LENGTH_LONG).show();
                 return;
             }
-            MainActivity.getInstance().addSavedWordToList(newWord);
-            listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, MainActivity.getSavedWordsList()));
+            Helper.getInstance().addSavedWordToList(newWord);
+            listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, Helper.getSavedWordsList()));
             MainActivity.getInstance().closeKeyboard();
         }
     }

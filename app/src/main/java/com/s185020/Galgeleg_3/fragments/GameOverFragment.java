@@ -20,6 +20,7 @@ import com.github.jinatonic.confetti.CommonConfetti;
 import com.github.jinatonic.confetti.ConfettiManager;
 import com.s185020.Galgeleg_3.MainActivity;
 import com.s185020.Galgeleg_3.R;
+import com.s185020.Galgeleg_3.logic.Helper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,46 +67,39 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
         }
         textView = highScore_view.findViewById(R.id.textView_highscore);
         button_play = highScore_view.findViewById(R.id.button_play_from_main);
-        button_play.setText("Play");
         button_settings = highScore_view.findViewById(R.id.button_settings);
-        button_settings.setText("Settings");
-
         listView = highScore_view.findViewById(R.id.list_view_game_over);
         button_play.setOnClickListener(this);
         button_settings.setOnClickListener(this);
 
         //Beregn point
-        int score = (int) Math.ceil((1000.0 / 7.0) * (7 - wrongGuessCount));
+        int scoreInt = (int) Math.ceil((1000.0 / 7.0) * (7 - wrongGuessCount));
+        String scoreString = scoreInt + "";
+        scoreString = scoreString.replaceFirst("^0+(?!$)", "");
 
         playSoundAsync();
         //TODO ryd op
         if (won) {
             confettiManager = CommonConfetti.rainingConfetti(container, new int[]{Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN}).infinite();
-
             Toast.makeText(getActivity(), "Flot, du vandt!", Toast.LENGTH_LONG).show();
             textViewText = "Flot klaret! Du har vundet! Ordet var " + word + "." +
-                    "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score;
+                    "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + scoreString;
         } else {
-
             Toast.makeText(getActivity(), "Trist, du tabte!", Toast.LENGTH_LONG).show();
             textViewText = "Trist, du tabte! Ordet var: \"" + word + "\"" +
-                    "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + score;
+                    "\nAntal forkerte gæt: " + wrongGuessCount + "\n\nPoint: " + scoreString;
         }
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        currentScoreString = ("" + (10000 + score)).substring(1) + " points - " + formatter.format(date);
+        currentScoreString = (scoreString + " point - " + formatter.format(date));
         textView.setText(textViewText);
-        button_play.setText("Spil igen!");
-
-        MainActivity.getInstance().addNewHighscoreToList(currentScoreString);
-        listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, MainActivity.getHighscoreList()));
+        Helper.getInstance().addNewHighscoreToList(currentScoreString);
+        listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, Helper.getHighscoreList()));
         return highScore_view;
     }
 
     public void onClick(View v) {
-        confettiManager.setEmissionDuration(1);
-
         if (v == button_play) {
 
             if (choice == 4) {
@@ -135,6 +129,12 @@ public class GameOverFragment extends Fragment implements View.OnClickListener {
     private void playSoundAsync() {
         MediaPlayerAsync runnable = new MediaPlayerAsync();
         new Thread(runnable).start();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        confettiManager.setEmissionDuration(1);
     }
 
     class MediaPlayerAsync implements Runnable {
