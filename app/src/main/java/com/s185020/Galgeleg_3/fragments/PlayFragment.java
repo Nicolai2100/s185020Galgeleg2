@@ -94,7 +94,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
         }
         editText.setHint("Tast");
         textViewWord.setText(spil.getSynligtOrd());
-        winOrLose();
+        //winOrLose();
         return play_view;
     }
 

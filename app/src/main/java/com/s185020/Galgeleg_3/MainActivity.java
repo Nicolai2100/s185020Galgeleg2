@@ -61,7 +61,8 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
             return true;
         }
         if (item.getItemId() == R.id.item_delete_highscore) {
-            new DialogFragment("Ønsker du at slette den gemte highscoreliste?", true).show(getSupportFragmentManager(), "");
+            DialogFragment dialogFragment = new DialogFragment("Ønsker du at slette den gemte highscoreliste?", this.getClass().getSimpleName());
+            dialogFragment.show(getSupportFragmentManager(), "");
             return true;
         }
         if (item.getItemId() == R.id.item_view_highscore) {
@@ -87,12 +88,6 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
         return this;
     }
 
-    @Override
-    public void onYesClicked() {
-        //Highscore slettes
-        Helper.getInstance().deleteSavedHighscore();
-    }
-
     public void closeKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -101,4 +96,10 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
         }
     }
 
+    @Override
+    public String onYesClicked(String choice) {
+        //Highscore slettes
+        Helper.getInstance().deleteSavedHighscore();
+        return "";
+    }
 }

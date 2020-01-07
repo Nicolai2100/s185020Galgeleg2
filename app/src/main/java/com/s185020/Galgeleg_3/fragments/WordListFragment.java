@@ -39,7 +39,7 @@ public class WordListFragment extends Fragment implements View.OnClickListener, 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 wordChosen = listView.getItemAtPosition(position).toString();
-                DialogFragment dialogFragment = new DialogFragment("Ønsker du at spille med ordet " + wordChosen + "?", false);
+                DialogFragment dialogFragment = new DialogFragment("Ønsker du at spille med ordet " + wordChosen + "?", this.getClass().getSimpleName());
                 dialogFragment.setTargetFragment(WordListFragment.this, 1);
                 dialogFragment.show(getFragmentManager(), "");
             }
@@ -62,7 +62,7 @@ public class WordListFragment extends Fragment implements View.OnClickListener, 
         if (v == saveWordButton) {
             String newWord = editText.getText().toString();
             newWord = newWord.trim();
-            if (newWord.length() < 1){
+            if (newWord.length() < 1) {
                 Toast.makeText(getActivity(), "Det indtastede ord er for kort!", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -73,7 +73,7 @@ public class WordListFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onYesClicked() {
+    public String onYesClicked(String choice) {
         //todo deleted addToBackStack
         Bundle bundle = new Bundle();
         bundle.putInt("choice", 4);
@@ -82,5 +82,6 @@ public class WordListFragment extends Fragment implements View.OnClickListener, 
         fragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, fragment)
                 .commit();
+        return "";
     }
 }

@@ -19,13 +19,11 @@ import com.s185020.Galgeleg_3.MainActivity;
 import com.s185020.Galgeleg_3.R;
 
 
-public class SettingsFragment extends Fragment implements View.OnClickListener {
+public class SettingsFragment extends Fragment implements View.OnClickListener, DialogFragment.DialogFragmentListener {
 
     private static SettingsFragment instance = null;
     private Button button_getWordFromDR, button_getWordFromDB, button_play, button_play_from_list;
-    private TextView textView;
     private int difficultyLevel;
-    private EditText et_difLevel;
     private View settings_view;
 
     private SettingsFragment() {
@@ -45,44 +43,25 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         ((MainActivity) getActivity()).setActionBarTitle("INDSTILLINGER");
         ((MainActivity) getActivity()).getSupportActionBar().show();
 
-        textView = settings_view.findViewById(R.id.settings_textView);
         button_getWordFromDR = settings_view.findViewById(R.id.button_dr);
         button_getWordFromDB = settings_view.findViewById(R.id.button_database);
         button_play = settings_view.findViewById(R.id.button_play_from_settings);
         button_play_from_list = settings_view.findViewById(R.id.button_play_from_list);
-        et_difLevel = settings_view.findViewById(R.id.et_diffLvl);
-        et_difLevel.setHint("Tast 1, 2 eller 3");
         button_getWordFromDR.setOnClickListener(this);
         button_getWordFromDB.setOnClickListener(this);
         button_play.setOnClickListener(this);
         button_play_from_list.setOnClickListener(this);
-        et_difLevel.setOnClickListener(this);
         return settings_view;
     }
 
     public void onClick(View v) {
-        if (v == et_difLevel) {
-            button_play.setVisibility(View.INVISIBLE);
-        }
         if (v == button_getWordFromDR) {
             startGame(1, 0);
         }
         if (v == button_getWordFromDB) {
-            String difLevel = et_difLevel.getText().toString();
-            et_difLevel.setText("");
-
-            if (!difLevel.matches("[1-3]")) {
-                Toast.makeText(getActivity(), "Skriv et tal mellem 1 og 3!", Toast.LENGTH_SHORT).show();
-            } else {
-                closeKeyboard();
-                try {
-                    difficultyLevel = Integer.parseInt(difLevel);
-                } catch (Exception e) {
-                    difficultyLevel = 2;
-                } finally {
-                    startGame(2, difficultyLevel);
-                }
-            }
+            DialogFragment dialogFragment = new DialogFragment("Vælg sværhedsgrad", this.getClass().getSimpleName());
+            dialogFragment.setTargetFragment(SettingsFragment.this, 1);
+            dialogFragment.show(getFragmentManager(), "");
         }
         if (v == button_play_from_list) {
             Fragment fragment = new WordListFragment();
@@ -112,5 +91,22 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public String onYesClicked(String choice) {
+        if (!choice.matches("[1-3]")) {
+            Toast.makeText(getActivity(), "Skriv et tal mellem 1 og 3!", Toast.LENGTH_SHORT).show();
+        } else {
+            closeKeyboard();
+            try {
+                difficultyLevel = Integer.parseInt(choice);
+            } catch (Exception e) {
+                difficultyLevel = 2;
+            } finally {
+                startGame(2, difficultyLevel);
+            }
+        }
+        return "";
     }
 }

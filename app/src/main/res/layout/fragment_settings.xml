@@ -52,17 +52,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_dr" />
 
-            <EditText
-                android:id="@+id/et_diffLvl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_database"
-                />
-
             <Button
                 android:id="@+id/button_play_from_list"
                 android:layout_width="101dp"
@@ -70,7 +59,7 @@
                 android:text="Vælg fra liste"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_diffLvl" />
+                app:layout_constraintTop_toBottomOf="@+id/button_database" />
 
             <Button
                 android:id="@+id/button_play_from_settings"
@@ -79,7 +68,14 @@
                 android:text="@string/spil"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_play_from_list" />
+                app:layout_constraintTop_toBottomOf="@+id/button_play_from_list"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"                />
         </LinearLayout>
     </ScrollView>
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.s185020.Galgeleg_3.MainActivity;
 import com.s185020.Galgeleg_3.R;
@@ -30,6 +31,9 @@ public class WelcomeFragment extends Fragment {
         });
 
         ((MainActivity) getActivity()).getSupportActionBar().hide();
+
+
+       //todo Toast.makeText(getActivity(), ""+this.getClass().getSimpleName(), Toast.LENGTH_LONG).show();
 
 
         return welcome_view;
