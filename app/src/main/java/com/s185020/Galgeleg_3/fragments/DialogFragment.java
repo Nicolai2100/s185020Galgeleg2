@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,24 +20,21 @@ import com.s185020.Galgeleg_3.MainActivity;
  */
 
 public class DialogFragment extends AppCompatDialogFragment {
-    private String contextCaller;
+    private int contextCaller;
     private boolean fromMainActivity = false;
     private DialogFragmentListener listener;
     private String message = null;
 
-    public DialogFragment(String message, String contextInstantiator) {
+    public DialogFragment(String message, int contextInstantiator) {
         this.message = message;
         this.contextCaller = contextInstantiator;
-        if (contextCaller.equalsIgnoreCase(MainActivity.class.getSimpleName())) {
-            fromMainActivity = true;
-        }
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-        if (contextCaller.equalsIgnoreCase(MainActivity.class.getSimpleName())) {
+        if (contextCaller == 1) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Obs!").setMessage(message).setNegativeButton("Nej", new DialogInterface.OnClickListener() {
                 @Override
@@ -45,11 +43,11 @@ public class DialogFragment extends AppCompatDialogFragment {
             }).setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    listener.onYesClicked(null);
+                    listener.onYesClicked("");
                 }
             });
             return builder.create();
-        } else if (contextCaller.equalsIgnoreCase(WordListFragment.class.getSimpleName())) {
+        } else if (contextCaller == 3) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("Obs!").setMessage(message).setNegativeButton("Nej", new DialogInterface.OnClickListener() {
                 @Override
@@ -58,14 +56,14 @@ public class DialogFragment extends AppCompatDialogFragment {
             }).setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    listener.onYesClicked(null);
+                    listener.onYesClicked("");
                 }
             });
             return builder.create();
             /**
              * Taget fra https://stackoverflow.com/questions/10903754/input-text-dialog-android
              */
-        } else if (contextCaller.equalsIgnoreCase(SettingsFragment.class.getSimpleName())) {
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("Sværhedsgrad");
             // Set up the input
@@ -89,9 +87,6 @@ public class DialogFragment extends AppCompatDialogFragment {
                 }
             });
             return builder.create();
-
-        } else {
-            return null;
         }
     }
 
@@ -103,7 +98,7 @@ public class DialogFragment extends AppCompatDialogFragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         try {
-            if (fromMainActivity) {
+            if (contextCaller == 1) {
                 listener = (DialogFragmentListener) context;
             } else
                 listener = (DialogFragmentListener) getTargetFragment();

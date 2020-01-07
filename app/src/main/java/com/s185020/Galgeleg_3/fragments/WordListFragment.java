@@ -39,7 +39,7 @@ public class WordListFragment extends Fragment implements View.OnClickListener, 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 wordChosen = listView.getItemAtPosition(position).toString();
-                DialogFragment dialogFragment = new DialogFragment("Ønsker du at spille med ordet " + wordChosen + "?", this.getClass().getSimpleName());
+                DialogFragment dialogFragment = new DialogFragment("Ønsker du at spille med ordet " + wordChosen + "?", 3);
                 dialogFragment.setTargetFragment(WordListFragment.this, 1);
                 dialogFragment.show(getFragmentManager(), "");
             }
@@ -62,25 +62,27 @@ public class WordListFragment extends Fragment implements View.OnClickListener, 
         if (v == saveWordButton) {
             String newWord = editText.getText().toString();
             newWord = newWord.trim();
-            if (newWord.length() < 1) {
+            if (newWord.length() < 2) {
                 Toast.makeText(getActivity(), "Det indtastede ord er for kort!", Toast.LENGTH_LONG).show();
                 return;
+            } else {
+                Helper.getInstance().addSavedWordToList(newWord);
+                listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, Helper.getSavedWordsList()));
+                MainActivity.getInstance().closeKeyboard();
             }
-            Helper.getInstance().addSavedWordToList(newWord);
-            listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, Helper.getSavedWordsList()));
-            MainActivity.getInstance().closeKeyboard();
         }
     }
 
     @Override
     public String onYesClicked(String choice) {
-        //todo deleted addToBackStack
         Bundle bundle = new Bundle();
         bundle.putInt("choice", 4);
         bundle.putString("wordChosen", wordChosen);
         Fragment fragment = PlayFragment.getInstance();
         fragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, fragment)
+        getFragmentManager().beginTransaction()
+                .replace(R.id.fragmentLayout, fragment)
+                .addToBackStack(null)
                 .commit();
         return "";
     }

@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements DialogFragment.Di
             return true;
         }
         if (item.getItemId() == R.id.item_delete_highscore) {
-            DialogFragment dialogFragment = new DialogFragment("Ønsker du at slette den gemte highscoreliste?", this.getClass().getSimpleName());
+            DialogFragment dialogFragment = new DialogFragment("Ønsker du at slette den gemte highscoreliste?", 1);
             dialogFragment.show(getSupportFragmentManager(), "");
             return true;
         }

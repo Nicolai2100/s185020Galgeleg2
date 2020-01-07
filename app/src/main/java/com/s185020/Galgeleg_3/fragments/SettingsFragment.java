@@ -59,13 +59,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
             startGame(1, 0);
         }
         if (v == button_getWordFromDB) {
-            DialogFragment dialogFragment = new DialogFragment("Vælg sværhedsgrad", this.getClass().getSimpleName());
+            DialogFragment dialogFragment = new DialogFragment("Vælg sværhedsgrad", 2);
             dialogFragment.setTargetFragment(SettingsFragment.this, 1);
             dialogFragment.show(getFragmentManager(), "");
         }
         if (v == button_play_from_list) {
             Fragment fragment = new WordListFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragmentLayout, fragment)
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentLayout, fragment)
                     .addToBackStack(null)
                     .commit();
         }
