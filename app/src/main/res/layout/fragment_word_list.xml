@@ -31,7 +31,7 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="ok" />
+            android:text="Tilføj" />
 
     </LinearLayout>
 
@@ -56,10 +56,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="20sp"
+        android:text="Vælg det ord du vil spille med ved at \nklikke på det. \n Tilføj evt nye ord eller rediger i de \nallerede indtastede"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

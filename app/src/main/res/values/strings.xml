@@ -3,7 +3,7 @@
     <string name="hent_fra_DR">Hent fra\nDR</string>
     <string name="hent_fra_db">Hent fra\ndatabase</string>
     <string name="spil">Start spil!</string>
-    <string name="settings_string">Vælg hvor du vil hente ord fra \neller start spillet med det samme!</string>
+    <string name="settings_string">Vælg hvor du vil hente ord fra for at starte spillet.</string>
     <string name="galgespillet">GALGESPILLET</string>
     <string name="guess">Gæt</string>
     <string name="type_guess">Indtast gæt:</string>

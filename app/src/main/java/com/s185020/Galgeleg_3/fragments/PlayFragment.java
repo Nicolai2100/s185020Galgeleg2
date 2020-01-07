@@ -122,7 +122,7 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
                         wrongLettersGuessed = wrongLettersGuessed + guessString;
                     }
                     textViewWrongCount.setText(getResources().getString(R.string.wrong_guess_count) + " " + spil.getAntalForkerteBogstaver() +
-                            ". \nForkerte bogstaver: " + wrongLettersGuessed);
+                            ". \n "+ wrongLettersGuessed + " ");
 
                     int rCode = hashMapPictureMistake.get(spil.getAntalForkerteBogstaver());
                     drawable = ResourcesCompat.getDrawable(getResources(), rCode, null);
