@@ -12,6 +12,7 @@
         android:id="@+id/linearlayout47"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,6 +23,7 @@
             android:id="@+id/editText_choose_word"
             android:layout_width="88dp"
             android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text" />
@@ -39,8 +41,8 @@
         android:id="@+id/linearLayout_list_view"
         android:layout_width="200dp"
         android:layout_height="278dp"
-        android:orientation="vertical"
         android:layout_marginTop="20dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linearlayout47">
@@ -55,15 +57,13 @@
         android:id="@+id/textView_word_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Vælg ordet du vil spille med. \nTilføj nye ord eller rediger et gammelt \nved at holde inde på ordet."
         android:textAlignment="center"
         android:textSize="20sp"
-        android:text="Vælg det ord du vil spille med ved at \nklikke på det. \n Tilføj evt nye ord eller rediger i de \nallerede indtastede"
-        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,7 +67,7 @@ public class WordListFragment extends Fragment implements View.OnClickListener, 
                 return;
             } else {
                 Helper.getInstance().addSavedWordToList(newWord);
-                listView.setAdapter(new ArrayAdapter(getContext(), R.layout.listview_layout, R.id.list_element, Helper.getSavedWordsList()));
+                listView.deferNotifyDataSetChanged();
                 MainActivity.getInstance().closeKeyboard();
             }
         }
